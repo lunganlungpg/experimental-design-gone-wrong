@@ -8,16 +8,16 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.11"
       - name: Install Python dependencies
         run: pip install numpy pandas scipy statsmodels matplotlib seaborn pytest
       - name: Python tests (data generators + statistical invariants)
         run: pytest -v
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "22"
       - name: Crime Lab stats engine tests
         run: node tests/js/stats.test.js
