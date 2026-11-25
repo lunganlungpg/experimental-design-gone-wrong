@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-label="Experimental Design Gone Wrong: a beaker mascot holding a p less than 0.01 sign next to the title">
+  <defs>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#1d1b27" stroke-opacity=".07"/>
+    </pattern>
+    <clipPath id="beaker"><path d="M905 92h90v52l60 150a18 18 0 0 1-16 25H861a18 18 0 0 1-16-25l60-150z"/></clipPath>
+    <style>
+      .t{font-family:Impact,'Arial Black','Helvetica Neue',sans-serif;fill:#1d1b27}
+      .m{font-family:'Courier New',ui-monospace,monospace;font-weight:700}
+      .liq{animation:slosh 4s ease-in-out infinite}
+      .sign{transform-origin:1060px 290px;animation:wob 3s ease-in-out infinite}
+      .blink{animation:blink 5s infinite}
+      @keyframes slosh{50%{transform:translateX(-36px)}}
+      @keyframes wob{50%{transform:rotate(4deg)}}
+      @keyframes blink{0%,92%,100%{opacity:0}95%{opacity:1}}
+    </style>
+  </defs>
+  <rect width="1200" height="360" rx="24" fill="#fbf7ee"/>
+  <rect width="1200" height="360" rx="24" fill="url(#grid)"/>
+  <rect x="4" y="4" width="1192" height="352" rx="22" fill="none" stroke="#1d1b27" stroke-width="6"/>
+
+  <!-- title -->
+  <text x="60" y="70" class="m" font-size="18" fill="#8a5cf6" letter-spacing="4">LEARN STATS BY COMMITTING CRIMES</text>
+  <text x="60" y="150" class="t" font-size="84" font-weight="900" textLength="640" lengthAdjust="spacingAndGlyphs">EXPERIMENTAL</text>
+  <text x="60" y="232" class="t" font-size="84" font-weight="900" textLength="700" lengthAdjust="spacingAndGlyphs">DESIGN <tspan fill="#ff7a35" stroke="#1d1b27" stroke-width="3">GONE WRONG</tspan></text>
+  <g transform="translate(60 262)">
+    <rect width="232" height="44" rx="10" fill="#e0344f" stroke="#1d1b27" stroke-width="3"/>
+    <text x="116" y="30" text-anchor="middle" class="m" font-size="17" fill="#fff">naive: p &lt; 0.01 ★★★</text>
+    <rect x="248" width="232" height="44" rx="10" fill="#1c9a62" stroke="#1d1b27" stroke-width="3"/>
+    <text x="364" y="30" text-anchor="middle" class="m" font-size="17" fill="#fff">honest: p = 0.72</text>
+    <text x="500" y="30" font-family="'Comic Sans MS','Segoe Print',cursive" font-size="22" fill="#55526a">← true effect: zero.</text>
+  </g>
+
+  <!-- mascot -->
+  <g class="sign">
+    <line x1="1060" y1="150" x2="1060" y2="290" stroke="#1d1b27" stroke-width="6" stroke-linecap="round"/>
+    <rect x="1012" y="86" width="100" height="70" rx="10" fill="#ffc93c" stroke="#1d1b27" stroke-width="5"/>
+    <text x="1062" y="118" text-anchor="middle" class="m" font-size="21" fill="#1d1b27">p&lt;0.01</text>
+    <text x="1062" y="143" text-anchor="middle" font-size="18" fill="#1d1b27">★★★</text>
+  </g>
+  <path d="M895 84h110" stroke="#1d1b27" stroke-width="8" stroke-linecap="round"/>
+  <g clip-path="url(#beaker)">
+    <rect x="820" y="80" width="260" height="260" fill="#e9f4ff"/>
+    <path class="liq" d="M800 205q36-14 72 0t72 0t72 0t72 0t72 0v160H800z" fill="#1c9a62"/>
+  </g>
+  <path d="M905 92h90v52l60 150a18 18 0 0 1-16 25H861a18 18 0 0 1-16-25l60-150z" fill="none" stroke="#1d1b27" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="930" cy="250" r="15" fill="#fff" stroke="#1d1b27" stroke-width="4"/>
+  <circle cx="970" cy="250" r="15" fill="#fff" stroke="#1d1b27" stroke-width="4"/>
+  <circle cx="934" cy="254" r="6" fill="#1d1b27"/><circle cx="966" cy="246" r="6" fill="#1d1b27"/>
+  <rect class="blink" x="913" y="234" width="74" height="32" fill="#1c9a62"/>
+  <path d="M930 282q20 16 40 0" fill="none" stroke="#1d1b27" stroke-width="5" stroke-linecap="round"/>
+  <path d="M1030 262q14-6 24-14" fill="none" stroke="#1d1b27" stroke-width="6" stroke-linecap="round"/>
+  <path d="M868 262q-26-8-32-36" fill="none" stroke="#1d1b27" stroke-width="6" stroke-linecap="round"/>
+  <path d="M905 319v16h-12M995 319v16h12" fill="none" stroke="#1d1b27" stroke-width="6" stroke-linecap="round"/>
+  <text x="790" y="70" font-family="'Comic Sans MS','Segoe Print',cursive" font-size="18" fill="#55526a" transform="rotate(-4 790 70)">Prof. Pipette (has never randomized anything)</text>
+</svg>
