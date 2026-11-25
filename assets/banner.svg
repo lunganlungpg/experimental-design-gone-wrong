@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-label="Experimental Design Gone Wrong: a beaker mascot holding a p less than 0.01 sign next to the title">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-label="Experimental Design Gone Wrong, created by Lungh: a beaker mascot holding a p less than 0.01 sign next to the title">
   <defs>
     <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
       <path d="M24 0H0V24" fill="none" stroke="#1d1b27" stroke-opacity=".07"/>
@@ -30,6 +30,9 @@
     <text x="364" y="30" text-anchor="middle" class="m" font-size="17" fill="#fff">honest: p = 0.72</text>
     <text x="500" y="30" font-family="'Comic Sans MS','Segoe Print',cursive" font-size="22" fill="#55526a">← true effect: zero.</text>
   </g>
+
+  <!-- creator credit -->
+  <text x="60" y="340" class="m" font-size="17" fill="#55526a">created by <tspan fill="#1d1b27" font-size="19">Lungh</tspan> · github.com/lunganlungpg</text>
 
   <!-- mascot -->
   <g class="sign">
