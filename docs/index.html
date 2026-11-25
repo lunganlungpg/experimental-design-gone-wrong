@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The p-Hacker's Crime Lab</title>
+  <meta name="description" content="An interactive, slightly unhinged playground where you commit classic experimental-design crimes, watch the p-values lie, and then fix them." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:wght@400;600;800&family=JetBrains+Mono:wght@400;700&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="skip" href="#lab">Skip to the crimes</a>
+
+  <!-- ===================== TOP BAR ===================== -->
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Back to top">
+      <img src="assets/favicon.svg" alt="" width="28" height="28" />
+      <span>Crime&nbsp;Lab</span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#case-01">01</a>
+      <a href="#case-02">02</a>
+      <a href="#case-03">03</a>
+      <a href="#case-04">04</a>
+      <a href="#slots">🎰</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#cheats">Fixes</a>
+    </nav>
+    <button id="themeToggle" class="icon-btn" type="button" aria-label="Toggle dark mode" title="Toggle lab lights">🌙</button>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="top">
+    <div class="hero-text">
+      <p class="kicker">Experimental Design Gone Wrong · interactive edition</p>
+      <h1>The p&#8209;Hacker's<br /><span class="glitch" data-text="Crime Lab">Crime Lab</span></h1>
+      <p class="lede">
+        Every experiment on this page has a <strong>true effect of exactly zero</strong>.
+        Every naive analysis will still swear on its grant that <code>p&nbsp;&lt;&nbsp;0.01</code>.
+        Your job: commit the crime, watch the stars <span class="stars-inline">***</span> appear,
+        then <em>catch yourself</em>.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#case-01">Start committing crimes →</a>
+        <a class="btn" href="https://github.com/lunganlungpg/experimental-design-gone-wrong">View on GitHub</a>
+      </div>
+      <p class="disclaimer">No real plants were harmed. Several real careers were, historically.</p>
+    </div>
+
+    <figure class="hero-art" aria-label="Professor Pipette, a beaker with googly eyes, proudly holding a sign reading p < 0.01">
+      <svg viewBox="0 0 320 340" class="mascot" role="img" aria-labelledby="mascotTitle">
+        <title id="mascotTitle">Professor Pipette, our mascot, who has never once randomized anything</title>
+        <defs>
+          <clipPath id="beakerClip"><path d="M110 70 h100 v60 l55 150 a20 20 0 0 1 -18 28 h-174 a20 20 0 0 1 -18 -28 l55 -150 z" /></clipPath>
+        </defs>
+        <!-- sign -->
+        <g class="sign">
+          <line x1="262" y1="120" x2="262" y2="250" class="stroke-ink" stroke-width="6" stroke-linecap="round" />
+          <rect x="214" y="56" width="100" height="70" rx="10" class="sign-board" />
+          <text x="264" y="88" text-anchor="middle" class="sign-text">p &lt; 0.01</text>
+          <text x="264" y="112" text-anchor="middle" class="sign-stars">★★★</text>
+        </g>
+        <!-- beaker -->
+        <path d="M100 62 h120" class="stroke-ink" stroke-width="8" stroke-linecap="round" />
+        <g clip-path="url(#beakerClip)">
+          <rect x="0" y="0" width="320" height="340" class="beaker-glass" />
+          <path class="liquid" d="M0 190 q40 -14 80 0 t80 0 t80 0 t80 0 v200 h-320 z" />
+          <circle class="bubble b1" cx="140" cy="290" r="6" />
+          <circle class="bubble b2" cx="180" cy="300" r="4" />
+          <circle class="bubble b3" cx="160" cy="280" r="5" />
+        </g>
+        <path d="M110 70 h100 v60 l55 150 a20 20 0 0 1 -18 28 h-174 a20 20 0 0 1 -18 -28 l55 -150 z" fill="none" class="stroke-ink" stroke-width="6" stroke-linejoin="round" />
+        <!-- measuring marks -->
+        <path d="M120 150 h18 M114 175 h14 M108 200 h18" class="stroke-ink" stroke-width="3" stroke-linecap="round" opacity=".55" />
+        <!-- face -->
+        <g class="face">
+          <circle cx="140" cy="230" r="17" class="eye-white" />
+          <circle cx="184" cy="230" r="17" class="eye-white" />
+          <circle cx="144" cy="234" r="7" class="pupil" />
+          <circle cx="180" cy="226" r="7" class="pupil" />
+          <rect class="lid" x="121" y="212" width="82" height="0" />
+          <path d="M140 266 q22 18 44 0" fill="none" class="stroke-ink" stroke-width="5" stroke-linecap="round" />
+        </g>
+        <!-- goggles strap -->
+        <path d="M118 120 q42 -16 84 0" fill="none" class="stroke-ink" stroke-width="5" opacity=".7" />
+        <!-- arm holding sign -->
+        <path d="M240 240 q14 -6 22 -12" fill="none" class="stroke-ink" stroke-width="6" stroke-linecap="round" />
+        <!-- other arm, waving at reviewers -->
+        <path class="wave" d="M82 240 q-28 -10 -34 -40" fill="none" stroke-width="6" stroke-linecap="round" />
+        <!-- feet -->
+        <path d="M120 308 v18 h-14 M200 308 v18 h14" fill="none" class="stroke-ink" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <figcaption class="scribble">Prof. Pipette<br />(has never randomized anything)</figcaption>
+    </figure>
+  </section>
+
+  <!-- ===================== ACHIEVEMENTS ===================== -->
+  <section class="achievements" aria-label="Your achievements">
+    <h2 class="sr-only">Achievements</h2>
+    <ul id="badges" class="badges"></ul>
+    <p class="badge-hint">Badges unlock as you play. They are worth exactly as much as an impact factor.</p>
+  </section>
+
+  <!-- ===================== THE LAB ===================== -->
+  <main id="lab">
+
+    <!-- ---------- CASE 01 ---------- -->
+    <section class="case" id="case-01" data-case="1">
+      <header class="case-head">
+        <span class="case-no">Case 01</span>
+        <h2>The Lazy Randomization</h2>
+        <p class="case-sub">“I sprayed the first 20 pots because they were closer to the door.” — every first-year, ever</p>
+      </header>
+
+      <div class="case-grid">
+        <div class="panel scene">
+          <svg id="bench" class="scene-svg" viewBox="0 0 800 300" role="img" aria-label="Greenhouse bench with 40 basil pots, sun on the left, cold air vent on the right"></svg>
+          <div class="legend">
+            <span><i class="sw sw-treated"></i>BioBoost‑X™ (sprayed)</span>
+            <span><i class="sw sw-control"></i>Control (tap water)</span>
+          </div>
+        </div>
+
+        <div class="panel controls">
+          <fieldset class="toggle" role="radiogroup" aria-label="Allocation method">
+            <legend>How do we assign pots?</legend>
+            <label><input type="radio" name="c1mode" value="lazy" checked /> 😴 Lazy: first 20 get the spray</label>
+            <label><input type="radio" name="c1mode" value="random" /> 🎲 Actually randomize</label>
+          </fieldset>
+          <label class="slider">
+            <span>Sunlight gradient along bench <output id="c1gOut">0.55</output> g / pot</span>
+            <input id="c1g" type="range" min="0" max="1" step="0.05" value="0.55" />
+          </label>
+          <label class="slider">
+            <span>True BioBoost‑X effect <output id="c1eOut">0.0</output> g</span>
+            <input id="c1e" type="range" min="0" max="6" step="0.5" value="0" />
+          </label>
+          <div class="btn-row">
+            <button class="btn" data-action="reroll" type="button">🌱 New greenhouse</button>
+            <button class="btn btn-ghost" data-action="universes" type="button">🌌 Run 500 universes</button>
+          </div>
+        </div>
+
+        <div class="panel results" aria-live="polite">
+          <div class="verdicts" id="c1results"></div>
+          <div class="mc" id="c1mc"></div>
+        </div>
+
+        <aside class="panel moral">
+          <h3>🕵️ What actually happened</h3>
+          <p>The pots near the sunny door were always going to be bigger. By spraying <em>those</em> pots you
+            perfectly welded “treatment” to “sunshine”. The <code>t</code>-test can't tell them apart, so it
+            hands the sun's credit to your product.</p>
+          <p><strong>Fix:</strong> randomize the allocation <em>and</em> put <code>bench_pos</code> in the model
+            (ANCOVA). Flip to 🎲 above and watch the miracle evaporate.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ---------- CASE 02 ---------- -->
+    <section class="case" id="case-02" data-case="2">
+      <header class="case-head">
+        <span class="case-no">Case 02</span>
+        <h2>Blocking the Wrong Way</h2>
+        <p class="case-sub">“I blocked! I'm a responsible scientist!” — narrator: the blocks ran <em>along</em> the gradient.</p>
+      </header>
+
+      <div class="case-grid">
+        <div class="panel scene">
+          <svg id="field" class="scene-svg" viewBox="0 0 800 400" role="img" aria-label="Field of 32 plots with a soil moisture gradient from wet west to dry east, outlined by blocks"></svg>
+          <div class="legend">
+            <span><b class="tl">C</b>Control</span><span><b class="tl">B</b>Biochar</span>
+            <span><b class="tl">K</b>Compost</span><span><b class="tl">N</b>NanoKelp</span>
+            <span class="muted">background = soil moisture</span>
+          </div>
+        </div>
+
+        <div class="panel controls">
+          <fieldset class="toggle" role="radiogroup" aria-label="Block orientation">
+            <legend>Which way do the blocks run?</legend>
+            <label><input type="radio" name="c2mode" value="rows" checked /> ↔️ Rows (parallel to gradient)</label>
+            <label><input type="radio" name="c2mode" value="cols" /> ↕️ Columns (perpendicular)</label>
+          </fieldset>
+          <label class="slider">
+            <span>West→East moisture cliff <output id="c2gOut">0.65</output> t/ha per column</span>
+            <input id="c2g" type="range" min="0" max="1.2" step="0.05" value="0.65" />
+          </label>
+          <label class="slider">
+            <span>True NanoKelp effect <output id="c2eOut">0.00</output> t/ha</span>
+            <input id="c2e" type="range" min="0" max="0.8" step="0.05" value="0" />
+          </label>
+          <div class="btn-row">
+            <button class="btn" data-action="reroll" type="button">🎲 Re-randomize</button>
+            <button class="btn btn-danger" data-action="rig" type="button">😈 Fish for a seed</button>
+            <button class="btn btn-ghost" data-action="universes" type="button">🌌 500 universes</button>
+          </div>
+        </div>
+
+        <div class="panel results" aria-live="polite">
+          <div class="verdicts" id="c2results"></div>
+          <div class="mc" id="c2mc"></div>
+        </div>
+
+        <aside class="panel moral">
+          <h3>🕵️ What actually happened</h3>
+          <p>A block is only useful if the plots <em>inside</em> it are alike. Row‑blocks each contain the whole wet‑to‑dry
+            range, so they soak up none of the gradient. All that moisture variation stays in your error term,
+            your test goes half‑blind, and one unlucky shuffle can still fake a winner.</p>
+          <p><strong>Fix:</strong> run blocks <em>across</em> the gradient (columns here), or block on both rows and
+            columns. Compare the residual noise (<code>MSE</code>) between the two layouts. Same field, same effort,
+            very different noise.</p>
+          <p class="muted small">And the 😈 button? That's how you find a “significant” seed: keep re-rolling until one works.
+            Please don't.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ---------- CASE 03 ---------- -->
+    <section class="case" id="case-03" data-case="3">
+      <header class="case-head">
+        <span class="case-no">Case 03</span>
+        <h2>The Pseudoreplication Delusion</h2>
+        <p class="case-sub">“n = 100!” (It's four plants. It has always been four plants.)</p>
+      </header>
+
+      <div class="case-grid">
+        <div class="panel scene">
+          <svg id="plants" class="scene-svg" viewBox="0 0 800 320" role="img" aria-label="Potted plants, each with many leaves; leaves on the same plant look alike"></svg>
+          <div class="legend">
+            <span><i class="sw sw-control"></i>Control plants</span>
+            <span><i class="sw sw-treated"></i>Fertilized plants</span>
+            <span class="muted">leaf size = measured leaf area</span>
+          </div>
+        </div>
+
+        <div class="panel controls">
+          <label class="slider">
+            <span>Real plants per group <output id="c3kOut">2</output></span>
+            <input id="c3k" type="range" min="2" max="8" step="1" value="2" />
+          </label>
+          <label class="slider">
+            <span>Leaves plucked per plant <output id="c3lOut">25</output></span>
+            <input id="c3l" type="range" min="1" max="50" step="1" value="25" />
+          </label>
+          <label class="slider">
+            <span>Plant-to-plant SD <output id="c3sOut">3.0</output> cm²</span>
+            <input id="c3s" type="range" min="0" max="5" step="0.25" value="3" />
+          </label>
+          <div class="btn-row">
+            <button class="btn" data-action="reroll" type="button">🌿 New plants</button>
+            <button class="btn btn-ghost" data-action="universes" type="button">🌌 500 universes</button>
+          </div>
+          <p class="stat-chip" id="c3icc"></p>
+        </div>
+
+        <div class="panel results" aria-live="polite">
+          <div class="verdicts" id="c3results"></div>
+          <div class="mc" id="c3mc"></div>
+        </div>
+
+        <aside class="panel moral">
+          <h3>🕵️ What actually happened</h3>
+          <p>Leaves on the same plant share genes, roots, pot and windowsill. They are not independent
+            experiments; they are the same experiment asked 25 times. Pulling more leaves makes the naive
+            <code>df</code> balloon while the information barely moves. Try 50 leaves and watch the false-positive
+            rate climb toward ridiculous.</p>
+          <p><strong>Fix:</strong> analyse at the level you randomized (the plant): average per plant, or fit a
+            mixed model with <code>groups=plant_id</code>. Want more power? Buy more <em>plants</em>.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ---------- CASE 04 ---------- -->
+    <section class="case" id="case-04" data-case="4">
+      <header class="case-head">
+        <span class="case-no">Case 04</span>
+        <h2>Split-Plot Amnesia</h2>
+        <p class="case-sub">“The irrigation was applied to whole strips but I analysed it per subplot because the software let me.”</p>
+      </header>
+
+      <div class="case-grid">
+        <div class="panel scene">
+          <svg id="strips" class="scene-svg" viewBox="0 0 800 340" role="img" aria-label="Five field blocks, each split into a rainfed and an irrigated strip, each strip cut into five cultivar subplots"></svg>
+          <div class="legend">
+            <span><i class="sw sw-water"></i>Irrigated strip</span>
+            <span><i class="sw sw-dry"></i>Rainfed strip</span>
+            <span class="muted">subplot shade = yield</span>
+          </div>
+        </div>
+
+        <div class="panel controls">
+          <label class="slider">
+            <span>Strip-to-strip SD (σ<sub>a</sub>) <output id="c4aOut">0.90</output> t/ha</span>
+            <input id="c4a" type="range" min="0" max="1.5" step="0.05" value="0.9" />
+          </label>
+          <label class="slider">
+            <span>True irrigation effect <output id="c4eOut">0.00</output> t/ha</span>
+            <input id="c4e" type="range" min="0" max="2" step="0.1" value="0" />
+          </label>
+          <div class="btn-row">
+            <button class="btn" data-action="reroll" type="button">🚜 New season</button>
+            <button class="btn btn-ghost" data-action="universes" type="button">🌌 500 universes</button>
+          </div>
+        </div>
+
+        <div class="panel results" aria-live="polite">
+          <div class="verdicts" id="c4results"></div>
+          <div class="mc" id="c4mc"></div>
+        </div>
+
+        <aside class="panel moral">
+          <h3>🕵️ What actually happened</h3>
+          <p>Irrigation was randomized to only <strong>10 strips</strong>, so irrigation has only 10 experimental units,
+            not 50. The flat ANOVA tests it against the tiny subplot noise (<em>Error b</em>, 40 df) instead of the
+            big strip-to-strip noise (<em>Error a</em>, 4 df). That's how a hose becomes a miracle.</p>
+          <p><strong>Fix:</strong> test whole-plot factors against whole-plot error: a split-plot ANOVA
+            or <code>MixedLM</code> with a random effect for <code>whole_plot_id</code>. Slide σ<sub>a</sub> to 0
+            and the two analyses agree. That's the whole lesson in one slider.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ---------- SLOT MACHINE ---------- -->
+    <section class="case slots" id="slots">
+      <header class="case-head">
+        <span class="case-no">Bonus</span>
+        <h2>The Garden of Forking Paths Slot Machine</h2>
+        <p class="case-sub">Test 20 absurd hypotheses on pure noise. Something will “work”. Something always works.</p>
+      </header>
+      <div class="slot-wrap">
+        <div class="slot-machine panel">
+          <div class="slot-top">
+            <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+            <strong>P · H · A · C · K · O · M · A · T · I · C</strong>
+            <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+          </div>
+          <div class="slot-grid" id="slotGrid"></div>
+          <button id="lever" class="btn btn-primary btn-big" type="button">🎰 PULL THE LEVER</button>
+        </div>
+        <div class="panel slot-side">
+          <div class="headline" id="headline">
+            <span class="paper">THE DAILY PREPRINT</span>
+            <p>Pull the lever to generate tomorrow's viral headline.</p>
+          </div>
+          <dl class="slot-stats">
+            <div><dt>Spins</dt><dd id="spins">0</dd></div>
+            <div><dt>Spins with a “discovery”</dt><dd id="discoveries">—</dd></div>
+            <div><dt>Theory says</dt><dd>1 − 0.95<sup>20</sup> ≈ 64%</dd></div>
+          </dl>
+          <label class="check"><input type="checkbox" id="bonferroni" /> Apply Bonferroni (α = 0.05 / 20) and ruin the fun</label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- QUIZ ---------- -->
+    <section class="case quiz" id="quiz">
+      <header class="case-head">
+        <span class="case-no">Exam</span>
+        <h2>Spot the Blunder</h2>
+        <p class="case-sub">Six real-ish lab meeting scenarios. Reviewer #2 is watching.</p>
+      </header>
+      <div class="panel quiz-card" id="quizCard" aria-live="polite"></div>
+    </section>
+
+    <!-- ---------- CHEAT SHEET ---------- -->
+    <section class="case cheats" id="cheats">
+      <header class="case-head">
+        <span class="case-no">Antidotes</span>
+        <h2>The Fix-It Cheat Sheet</h2>
+        <p class="case-sub">Copy, paste, and redeem yourself. Python + <code>statsmodels</code>, same as the notebooks.</p>
+      </header>
+      <div class="cheat-grid" id="cheatGrid"></div>
+    </section>
+
+    <!-- ---------- EXCUSE-O-MATIC ---------- -->
+    <section class="case excuses" id="excuses">
+      <header class="case-head">
+        <span class="case-no">Emergency</span>
+        <h2>Reviewer #2 Excuse‑o‑Matic</h2>
+        <p class="case-sub">For when you didn't read this page in time.</p>
+      </header>
+      <div class="panel excuse-card">
+        <blockquote id="excuse">“We respectfully note that the reviewer's concern, while valid, is beyond the scope of this underpowered study.”</blockquote>
+        <button class="btn" id="excuseBtn" type="button">🙃 Generate another excuse</button>
+        <p class="muted small">Warning: none of these have ever worked.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <pre class="ascii" aria-hidden="true">
+   _____
+  |     |   A p-value walks into a bar.
+  | p?  |   Bartender: "We don't serve your kind here."
+  |_____|   p-value: "Relax, I'm not significant."
+   |   |    (Bartender ran 19 more bars until one let it in.)
+  _|   |_
+    </pre>
+    <p>Made for stats workshops and lab meetings. MIT licensed. Simulations run entirely in your browser.</p>
+    <p class="muted small">Opening scenes are picked to show each blunder in action. Hit 🌌 to see how often it happens in general. (Yes, picking them was itself a tiny crime. We confess.)</p>
+    <p class="muted small">Every number on this page is computed live by <code>js/stats.js</code>, checked against scipy &amp; statsmodels in <code>tests/js</code>.</p>
+  </footer>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/stats.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
