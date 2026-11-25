@@ -4,7 +4,7 @@
 
 <h3 align="center">Playful simulations of lab and field blunders, and how to stop fooling yourself with naive <i>t</i>-tests.</h3>
 
-<p align="center">Created by <a href="https://github.com/lunganlungpg"><b>Lunganlung P. G.</b></a></p>
+<p align="center">Created by <a href="https://github.com/lunganlungpg"><b>Lungh</b></a></p>
 
 <p align="center">
   <a href="https://lunganlungpg.github.io/experimental-design-gone-wrong/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE_Play-The_Crime_Lab-FFC93C?style=for-the-badge&labelColor=1D1B27" alt="Play the Crime Lab" /></a>
@@ -143,7 +143,7 @@ experimental-design-gone-wrong/
 
 ## Author
 
-Created and maintained by **[Lunganlung P. G.](https://github.com/lunganlungpg)**. If this repo saved you from a Reviewer #2 ambush, a ⭐ is appreciated.
+Created and maintained by **[Lungh](https://github.com/lunganlungpg)**. If this repo saved you from a Reviewer #2 ambush, a ⭐ is appreciated.
 
 ---
 
