@@ -4,6 +4,8 @@
 
 <h3 align="center">Playful simulations of lab and field blunders, and how to stop fooling yourself with naive <i>t</i>-tests.</h3>
 
+<p align="center">Created by <a href="https://github.com/lunganlungpg"><b>Lunganlung P. G.</b></a></p>
+
 <p align="center">
   <a href="https://lunganlungpg.github.io/experimental-design-gone-wrong/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE_Play-The_Crime_Lab-FFC93C?style=for-the-badge&labelColor=1D1B27" alt="Play the Crime Lab" /></a>
   <a href="#notebook-modules--open-in-colab"><img src="https://img.shields.io/badge/Jupyter-4_Lessons-F37626?style=for-the-badge&logo=jupyter&logoColor=white&labelColor=1D1B27" alt="Jupyter notebooks" /></a>
@@ -136,6 +138,12 @@ experimental-design-gone-wrong/
       /     \        until it agreed with me."
      /_______\              — Anonymous, Reviewer #2's nightmare
 ```
+
+---
+
+## Author
+
+Created and maintained by **[Lunganlung P. G.](https://github.com/lunganlungpg)**. If this repo saved you from a Reviewer #2 ambush, a ⭐ is appreciated.
 
 ---
 
