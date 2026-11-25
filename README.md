@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="Experimental Design Gone Wrong: Prof. Pipette the beaker proudly holding a p < 0.01 sign" width="100%" />
+  <img src="assets/banner.svg" alt="Experimental Design Gone Wrong, created by Lungh: Prof. Pipette the beaker proudly holding a p < 0.01 sign" width="100%" />
 </p>
 
 <h3 align="center">Playful simulations of lab and field blunders, and how to stop fooling yourself with naive <i>t</i>-tests.</h3>
