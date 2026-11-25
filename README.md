@@ -6,6 +6,8 @@
 
 <p align="center">Created by <a href="https://github.com/lunganlungpg"><b>Lungh</b></a></p>
 
+<p align="center"><b>🎮 Play it live: <a href="https://lunganlungpg.github.io/experimental-design-gone-wrong/">lunganlungpg.github.io/experimental-design-gone-wrong</a></b></p>
+
 <p align="center">
   <a href="https://lunganlungpg.github.io/experimental-design-gone-wrong/"><img src="https://img.shields.io/badge/%F0%9F%8E%AE_Play-The_Crime_Lab-FFC93C?style=for-the-badge&labelColor=1D1B27" alt="Play the Crime Lab" /></a>
   <a href="#notebook-modules--open-in-colab"><img src="https://img.shields.io/badge/Jupyter-4_Lessons-F37626?style=for-the-badge&logo=jupyter&logoColor=white&labelColor=1D1B27" alt="Jupyter notebooks" /></a>
@@ -36,6 +38,8 @@ Welcome to **Experimental Design Gone Wrong**—a collection of short, 5-minute 
 
 Don't feel like opening Jupyter? Fair. The [`docs/`](docs/) folder is a **zero-install, zero-build website** where you commit every blunder yourself, with sliders, and watch the *p*-values lie to your face in real time.
 
+**👉 Open it now: <https://lunganlungpg.github.io/experimental-design-gone-wrong/>**
+
 | What's in it | What you do | What you learn |
 |---|---|---|
 | 🌱 **Case 01 · Lazy Randomization** | Spray the 20 pots by the sunny door, then flip to 🎲 *actually randomize* | Confounding: the sun gets the credit, your product gets the press release |
@@ -49,7 +53,7 @@ Every case has a **🌌 Run 500 universes** button that repeats the experiment 5
 
 > **Run it locally:** `cd docs && python -m http.server` then open <http://localhost:8000>. Or just double-click `docs/index.html`.
 >
-> **Host it:** go to *Settings → Pages → Source: GitHub Actions*. The included [`pages.yml`](.github/workflows/pages.yml) workflow publishes `docs/` on every push to `main`.
+> **Host your own copy:** fork the repo, then go to *Settings → Pages → Source: GitHub Actions*. The included [`pages.yml`](.github/workflows/pages.yml) workflow publishes `docs/` on every push to `main`.
 
 All statistics run in the browser through a tiny hand-written engine ([`docs/js/stats.js`](docs/js/stats.js): OLS, *t*, *F*, incomplete beta, seeded RNG), checked against **scipy** and **statsmodels** in [`tests/js/stats.test.js`](tests/js/stats.test.js). It also has jokes in the comments. Mainly for the jokes, really.
 
