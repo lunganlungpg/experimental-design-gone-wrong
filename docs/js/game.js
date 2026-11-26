@@ -302,6 +302,7 @@
         </details>
 
         <button type="button" class="btn btn-primary btn-big" id="gStart">🚀 Start reviewing</button>
+        <p class="game-credit">A game by <a href="https://github.com/lunganlungpg">Lungh</a> · Peer Review Panic</p>
       </div>`;
 
     let mode = saved.mode, count = saved.count, difficulty = saved.difficulty;
@@ -601,7 +602,7 @@
     if (isBest) store.set("crimelab.highscore", p.score);
     if (p.score >= 1800) lab().unlock("tenure");
     if (p.correct === G.rounds && p.answered === G.rounds) lab().unlock("flawless");
-    const share = `I reached ${title} ${em} with ${p.score.toLocaleString()} pts in Peer Review Panic (${p.correct}/${p.answered} blunders caught, ${DIFFICULTY[G.difficulty].label} mode). Can you spot the p-hack? ${location.href.split("#")[0]}#game`;
+    const share = `I reached ${title} ${em} with ${p.score.toLocaleString()} pts in Peer Review Panic (${p.correct}/${p.answered} blunders caught, ${DIFFICULTY[G.difficulty].label} mode). Can you spot the p-hack? A game by Lungh: ${location.href.split("#")[0]}#game`;
     stage().innerHTML = `
       <div class="g-results">
         <p class="kick">${p.lives <= 0 ? "Career over (for now)" : "Review season complete"}</p>
@@ -614,6 +615,7 @@
           <div><dt>Difficulty</dt><dd>${DIFFICULTY[G.difficulty].label}</dd></div>
         </dl>
         <p class="verdict-line">${soloVerdict(p)}</p>
+        <p class="game-credit">A game by <a href="https://github.com/lunganlungpg">Lungh</a> · Peer Review Panic</p>
         <div class="btn-row center">
           <button type="button" class="btn btn-primary" id="gAgain">🔁 Play again</button>
           <button type="button" class="btn" id="gShare">📋 Copy my score</button>
@@ -659,6 +661,7 @@
           <blockquote id="gExcuse">${esc(lab().excuse())}</blockquote>
           <button type="button" class="btn" id="gReroll">🎲 Different excuse (one reroll, we're not monsters)</button>
         </div>
+        <p class="game-credit">A game by <a href="https://github.com/lunganlungpg">Lungh</a> · Peer Review Panic</p>
         <div class="btn-row center">
           <button type="button" class="btn btn-primary" id="gRematch">🔁 Rematch</button>
           <button type="button" class="btn" id="gLobby">🏠 Lobby</button>
