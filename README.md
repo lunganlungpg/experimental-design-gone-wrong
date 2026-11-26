@@ -30,7 +30,7 @@ Welcome to **Experimental Design Gone Wrong**—a collection of short, 5-minute 
 | 01 | **The Lazy Randomization** — First 20 pots parked by sunny door; back 20 under HVAC vent | 2-sample *t*-test / OLS (`df = 38`) | **`1.52e-11`** | Spatial ANCOVA `+ bench_pos` (`df = 37`) | **`0.7161`** |
 | 02 | **Blocking the Wrong Way** — 8 row-blocks laid *parallel* (not perpendicular) to West→East moisture cliff | CRD ANOVA (`df = 28`) / Wrong RCBD (`df = 21`) | **`1.78e-05`** / **`0.0002`** | Row + Column Blocked ANOVA (`df = 18`) | **`0.7258`** |
 | 03 | **Pseudoreplication Delusion** — 25 leaves from 2 plants per group (`100` rows vs. `4` plants) | Leaf-level *t*-test (`df = 98`) | **`3.73e-07`** | `MixedLM` (`4` clusters) / Plant-Mean *t*-test (`df = 2`) | **`0.3348`** / **`0.4367`** |
-| 04 | **Split-Plot Amnesia** — 50 subplots across 10 irrigation strips analyzed as a flat CRD | CRD Two-Way ANOVA (`df = 40`) | **`0.0017`** | Split-Plot `MixedLM` (`10` strips) / Whole-Plot Error(a) (`df = 4`) | **`0.2432`** / **`0.3080`** |
+| 04 | **Split-Plot Amnesia** — 50 subplots across 10 irrigation strips analyzed as a flat CRD | CRD Two-Way ANOVA (`df = 40`) | **`0.0029`** | Split-Plot `MixedLM` (`10` strips) / Whole-Plot Error(a) (`df = 4`) | **`0.1843`** / **`0.2550`** |
 
 ---
 
@@ -42,6 +42,7 @@ Don't feel like opening Jupyter? Fair. The [`docs/`](docs/) folder is a **zero-i
 
 | What's in it | What you do | What you learn |
 |---|---|---|
+| 🎮 **Peer Review Panic (the game)** | **Single player:** climb from Unpaid Intern to Nobel-ish Laureate with 3 credibility flasks. **Multiplayer:** 2–4 players pass one device around; the loser reads a Reviewer #2 excuse aloud | Spotting six classic blunders in freshly generated studies, against the clock |
 | 🌱 **Case 01 · Lazy Randomization** | Spray the 20 pots by the sunny door, then flip to 🎲 *actually randomize* | Confounding: the sun gets the credit, your product gets the press release |
 | 🌾 **Case 02 · Blocking the Wrong Way** | Rotate the blocks, and press 😈 *Fish for a seed* to see how “significant” seeds get found | Blocks must be uniform inside; seed-fishing is p-hacking with extra steps |
 | 🍃 **Case 03 · Pseudoreplication** | Drag “leaves per plant” to 50 and watch *n* inflate while the truth stays at 4 plants | The experimental unit, ICC and effective sample size |
@@ -107,6 +108,8 @@ experimental-design-gone-wrong/
 │   ├── css/style.css
 │   ├── js/stats.js                        # Dependency-free OLS / t / F engine
 │   ├── js/app.js                          # Simulations, SVG scenes, slot machine, quiz
+│   ├── js/scenarios.js                    # Peer Review Panic: live-generated case files
+│   ├── js/game.js                         # Peer Review Panic: solo + multiplayer game
 │   └── assets/favicon.svg
 ├── .github/workflows/                     # CI (pytest + node) and Pages deploy
 ├── src/
@@ -114,7 +117,8 @@ experimental-design-gone-wrong/
 │   └── simulate_blunders.py               # Fixed-seed data generators & comparison helpers
 ├── tests/
 │   ├── test_simulate_blunders.py          # Reproducibility & statistical verification tests
-│   └── js/stats.test.js                   # Browser stats engine vs scipy/statsmodels
+│   ├── js/stats.test.js                   # Browser stats engine vs scipy/statsmodels
+│   └── js/scenarios.test.js               # Every game case is guilty as charged
 ├── 01_the_lazy_randomization/
 │   └── 01_the_lazy_randomization.ipynb
 ├── 02_blocking_the_wrong_way/
