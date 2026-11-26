@@ -86,6 +86,9 @@
     ["pooper", "🧊", "Party Pooper"],
     ["scholar", "🎓", "Reviewer #2's Nightmare"],
     ["excuses", "🙃", "Excuse Collector"],
+    ["tenure", "🎓", "Got Tenure"],
+    ["flawless", "💎", "Flawless Reviewer"],
+    ["rivalry", "🤝", "Lab Rivalry Survivor"],
   ];
   const earned = new Set(store.get("crimelab.badges", []));
 
@@ -1004,16 +1007,19 @@ reject, p_adj, _, _ = multipletests(pvals, alpha=0.05, method="holm")
   /* ======================================================================
    * EXCUSE-O-MATIC
    * ==================================================================== */
+  const EXCUSE_A = ["We respectfully note that", "With all due respect,", "As is well established in the field,", "In our defence,", "Following long-standing lab tradition,"];
+  const EXCUSE_B = ["the leaves were extremely independent-minded", "the sunny door was part of the treatment", "the split-plot was split emotionally, not physically", "randomization was performed in spirit", "the blocks were blocked in a vibes-based manner", "n = 100 felt more honest than n = 4", "p = 0.051 is basically 0.05 if you squint", "we only peeked at the p-value a normal amount", "the other 19 outcomes were measured recreationally"];
+  const EXCUSE_C = ["and is beyond the scope of this study.", "and will be addressed in future work (never).", "which our software did not warn us about.", "as our reviewer on the previous journal agreed.", "and the effect size is, frankly, vibrant."];
+  function makeExcuse() {
+    const pickR = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    return `“${pickR(EXCUSE_A)} ${pickR(EXCUSE_B)}, ${pickR(EXCUSE_C)}”`;
+  }
+
   const excuses = (() => {
-    const A = ["We respectfully note that", "With all due respect,", "As is well established in the field,", "In our defence,", "Following long-standing lab tradition,"];
-    const B = ["the leaves were extremely independent-minded", "the sunny door was part of the treatment", "the split-plot was split emotionally, not physically", "randomization was performed in spirit", "the blocks were blocked in a vibes-based manner", "n = 100 felt more honest than n = 4", "p = 0.051 is basically 0.05 if you squint"];
-    const C = ["and is beyond the scope of this study.", "and will be addressed in future work (never).", "which our software did not warn us about.", "as our reviewer on the previous journal agreed.", "and the effect size is, frankly, vibrant."];
     let n = 0;
     function init() {
       $("#excuseBtn").addEventListener("click", () => {
-        const r = Math.random;
-        const pickR = (arr) => arr[Math.floor(r() * arr.length)];
-        $("#excuse").textContent = `“${pickR(A)} ${pickR(B)}, ${pickR(C)}”`;
+        $("#excuse").textContent = makeExcuse();
         if (++n >= 5) unlock("excuses");
       });
     }
@@ -1040,6 +1046,9 @@ reject, p_adj, _, _ = multipletests(pvals, alpha=0.05, method="holm")
     });
     sync();
   }
+
+  // Shared helpers for game.js (defined now, so they exist before boot runs).
+  window.CrimeLab = { toast, confetti, unlock, excuse: makeExcuse };
 
   function boot() {
     initTheme();

@@ -9,6 +9,7 @@ from src.simulate_blunders import (
     simulate_lazy_randomization,
     simulate_pseudoreplication,
     simulate_split_plot,
+    split_plot_anova,
 )
 
 __all__ = [
@@ -20,4 +21,5 @@ __all__ = [
     "simulate_lazy_randomization",
     "simulate_pseudoreplication",
     "simulate_split_plot",
+    "split_plot_anova",
 ]

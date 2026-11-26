@@ -13,6 +13,7 @@ from src.simulate_blunders import (
     simulate_lazy_randomization,
     simulate_pseudoreplication,
     simulate_split_plot,
+    split_plot_anova,
 )
 
 
@@ -100,3 +101,58 @@ def test_module_04_split_plot_amnesia() -> None:
         groups=df["whole_plot_id"],
     ).fit(reml=True)
     assert mlm.pvalues["C(irrigation, Sum)[S.Rainfed]"] > 0.05
+
+
+def test_split_plot_randomization_is_explicit() -> None:
+    """Irrigation is randomized to strips and cultivars to subplot positions."""
+    df = simulate_split_plot()
+    # Each strip holds one irrigation level and every cultivar exactly once.
+    per_strip = df.groupby("whole_plot_id", observed=True)
+    assert (per_strip["irrigation"].nunique() == 1).all()
+    assert (per_strip["cultivar"].nunique() == 5).all()
+    assert (per_strip["subplot_pos"].nunique() == 5).all()
+    # The layout is not a fixed iteration order: some block puts Irrigated first,
+    # and cultivar order differs between strips.
+    first_strip = df[df["strip_pos"] == 1].groupby("block", observed=True)["irrigation"].first()
+    assert first_strip.nunique() == 2
+    orders = per_strip.apply(lambda g: tuple(g.sort_values("subplot_pos")["cultivar"]))
+    assert orders.nunique() > 1
+
+
+def test_split_plot_anova_uses_the_right_error_terms() -> None:
+    """Irrigation is tested against Error(a); cultivar terms against Error(b)."""
+    df = simulate_split_plot()
+    table = split_plot_anova(df)
+
+    assert table.loc["Irrigation", "df"] == 1
+    assert table.loc["Error(a): Block x Irrigation", "df"] == 4
+    assert table.loc["Cultivar", "df"] == 4
+    assert table.loc["Irrigation x Cultivar", "df"] == 4
+    assert table.loc["Error(b): subplot residual", "df"] == 32
+
+    # Irrigation vs Error(a) equals the ANOVA on whole-plot (strip) means.
+    wp_means = df.groupby(["block", "irrigation"], as_index=False, observed=True)[
+        "yield_t_ha"
+    ].mean()
+    wp = anova_lm(smf.ols("yield_t_ha ~ C(block) + C(irrigation)", data=wp_means).fit())
+    np.testing.assert_allclose(table.loc["Irrigation", "F"], wp.loc["C(irrigation)", "F"])
+    np.testing.assert_allclose(
+        table.loc["Irrigation", "p_value"], wp.loc["C(irrigation)", "PR(>F)"]
+    )
+
+    # Cultivar and the interaction vs Error(b) match statsmodels' residual F-tests.
+    full = anova_lm(
+        smf.ols(
+            "yield_t_ha ~ C(block) + C(irrigation) + C(block):C(irrigation)"
+            " + C(cultivar) + C(irrigation):C(cultivar)",
+            data=df,
+        ).fit()
+    )
+    np.testing.assert_allclose(table.loc["Cultivar", "F"], full.loc["C(cultivar)", "F"])
+    np.testing.assert_allclose(
+        table.loc["Irrigation x Cultivar", "F"], full.loc["C(irrigation):C(cultivar)", "F"]
+    )
+
+    # The lesson: irrigation is not significant, cultivar genuinely is.
+    assert table.loc["Irrigation", "p_value"] > 0.05
+    assert table.loc["Cultivar", "p_value"] < 0.01

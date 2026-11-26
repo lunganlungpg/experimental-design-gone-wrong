@@ -221,7 +221,7 @@ def simulate_pseudoreplication(
 
 
 def simulate_split_plot(
-    seed: int = 123,
+    seed: int = 21,
     n_blocks: int = 5,
     n_cultivars: int = 5,
     true_irrigation_effect: float = 0.0,
@@ -234,29 +234,44 @@ def simulate_split_plot(
     substantially from patch to patch (sigma_a = 0.90 t/ha), whereas adjacent
     cultivar subplots within a strip are uniform (sigma_b = 0.22 t/ha).
 
+    Randomization is explicit at both experimental-unit levels: within each block
+    the two irrigation levels are randomly assigned to the two strip positions,
+    and within each strip the cultivars are randomly assigned to subplot
+    positions. ``strip_pos`` and ``subplot_pos`` record where each unit landed.
+
     Ground truth: Irrigation has zero true effect (``true_irrigation_effect=0.0``),
-    whereas Cultivar has a modest real genetic progression (+0.12 t/ha per step).
+    whereas Cultivar has a modest real genetic progression (+0.12 t/ha per step,
+    from ``Var_1`` upward).
+
+    The default ``seed=21`` was chosen so the lesson shows the blunder (naive
+    p < 0.01 for irrigation, honest split-plot p > 0.05). Like every default seed in
+    this module it is a teaching example, not a typical draw: with a flat ANOVA the
+    irrigation false-positive rate is roughly 40%, not 100%.
     """
     rng = np.random.default_rng(seed)
     irrigations = ["Rainfed", "Irrigated"]
     cultivars = [f"Var_{i}" for i in range(1, n_cultivars + 1)]
+    cultivar_effect = {cv: 0.12 * idx for idx, cv in enumerate(cultivars)}
 
     records: list[dict[str, object]] = []
     subplot_id = 1
     for b in range(1, n_blocks + 1):
         block_eff = rng.normal(0.0, 0.25)
-        for irr in irrigations:
+        # Randomize irrigation to the two whole-plot strips in this block.
+        for strip_pos, irr in enumerate(rng.permutation(irrigations), start=1):
+            irr = str(irr)
             wp_id = f"B{b}_{irr}"
             wp_eff = rng.normal(0.0, 0.90)
             irr_bump = true_irrigation_effect if irr == "Irrigated" else 0.0
-            for idx, cv in enumerate(cultivars):
-                cv_eff = 0.12 * idx
+            # Randomize cultivars to subplot positions within this strip.
+            for subplot_pos, cv in enumerate(rng.permutation(cultivars), start=1):
+                cv = str(cv)
                 yield_t_ha = (
                     4.8
                     + block_eff
                     + irr_bump
                     + wp_eff
-                    + cv_eff
+                    + cultivar_effect[cv]
                     + rng.normal(0.0, 0.22)
                 )
                 records.append(
@@ -265,7 +280,9 @@ def simulate_split_plot(
                         "block": f"Block_{b}",
                         "irrigation": irr,
                         "whole_plot_id": wp_id,
+                        "strip_pos": strip_pos,
                         "cultivar": cv,
+                        "subplot_pos": subplot_pos,
                         "yield_t_ha": round(float(yield_t_ha), 3),
                     }
                 )
@@ -277,3 +294,79 @@ def simulate_split_plot(
     )
     df["cultivar"] = pd.Categorical(df["cultivar"], categories=cultivars, ordered=True)
     return df
+
+
+def split_plot_anova(
+    df: pd.DataFrame,
+    response: str = "yield_t_ha",
+    block: str = "block",
+    whole_plot: str = "irrigation",
+    subplot: str = "cultivar",
+) -> pd.DataFrame:
+    """Classic split-plot ANOVA with each factor tested against its own error stratum.
+
+    For a balanced split-plot in randomized complete blocks:
+
+    ======================  ===============================  ==========================
+    Source                  df                               Tested against
+    ======================  ===============================  ==========================
+    Block                   r - 1                            (not tested)
+    Whole-plot factor A     a - 1                            Error(a) = Block x A
+    Error(a)                (r - 1)(a - 1)
+    Subplot factor B        b - 1                            Error(b)
+    A x B                   (a - 1)(b - 1)                   Error(b)
+    Error(b)                a(r - 1)(b - 1)
+    ======================  ===============================  ==========================
+
+    With 5 blocks, 2 irrigation levels and 5 cultivars this gives Irrigation
+    F(1, 4), Cultivar F(4, 32) and Irrigation x Cultivar F(4, 32).
+    """
+    import statsmodels.formula.api as smf
+    from scipy import stats
+    from statsmodels.stats.anova import anova_lm
+
+    blk, a_term, b_term = f"C({block})", f"C({whole_plot})", f"C({subplot})"
+    formula = (
+        f"{response} ~ {blk} + {a_term} + {blk}:{a_term} + {b_term} + {a_term}:{b_term}"
+    )
+    table = anova_lm(smf.ols(formula, data=df).fit())
+
+    def row(term: str) -> tuple[float, float]:
+        return float(table.loc[term, "df"]), float(table.loc[term, "sum_sq"])
+
+    df_blk, ss_blk = row(blk)
+    df_a, ss_a = row(a_term)
+    df_ea, ss_ea = row(f"{blk}:{a_term}")
+    df_b, ss_b = row(b_term)
+    df_ab, ss_ab = row(f"{a_term}:{b_term}")
+    df_eb, ss_eb = row("Residual")
+    ms_ea, ms_eb = ss_ea / df_ea, ss_eb / df_eb
+
+    def tested(name: str, d: float, ss: float, err_ms: float, err_df: float, err: str):
+        ms = ss / d
+        f = ms / err_ms
+        return {
+            "Source": name, "df": d, "SS": ss, "MS": ms, "F": f,
+            "p_value": float(stats.f.sf(f, d, err_df)), "Error term": err,
+        }
+
+    def plain(name: str, d: float, ss: float):
+        return {
+            "Source": name, "df": d, "SS": ss, "MS": ss / d, "F": np.nan,
+            "p_value": np.nan, "Error term": "",
+        }
+
+    rows = [
+        plain("Block", df_blk, ss_blk),
+        tested(whole_plot.capitalize(), df_a, ss_a, ms_ea, df_ea, f"Error(a), df = {int(df_ea)}"),
+        plain("Error(a): Block x " + whole_plot.capitalize(), df_ea, ss_ea),
+        tested(subplot.capitalize(), df_b, ss_b, ms_eb, df_eb, f"Error(b), df = {int(df_eb)}"),
+        tested(
+            f"{whole_plot.capitalize()} x {subplot.capitalize()}",
+            df_ab, ss_ab, ms_eb, df_eb, f"Error(b), df = {int(df_eb)}",
+        ),
+        plain("Error(b): subplot residual", df_eb, ss_eb),
+    ]
+    out = pd.DataFrame(rows).set_index("Source")
+    out["df"] = out["df"].astype(int)
+    return out
